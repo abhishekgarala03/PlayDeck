@@ -10,7 +10,6 @@ data class DetailMovieResponse(
     @SerializedName("adult") var adult: Boolean? = null,
     @SerializedName("backdrop_path") var backdropPath: String? = null,
     @SerializedName("budget") var budget: Int? = null,
-    @SerializedName("genres") var genres: ArrayList<Genres> = arrayListOf(),
     @SerializedName("homepage") var homepage: String? = null,
     @SerializedName("id") var id: Int? = null,
     @SerializedName("imdb_id") var imdbId: String? = null,
@@ -44,7 +43,6 @@ data class DetailMovieResponse(
             voteCount = voteCount,
             backdropPath = backdropPath,
             posterPath = posterPath,
-            genres = genres.map { it.toEntity() },
             productionCompanies = productionCompanies.map { it.toEntity() },
             productionCountries = productionCountries.map { it.toEntity() },
             spokenLanguages = spokenLanguages.map { it.toEntity() }

@@ -1,16 +1,14 @@
 package app.abhishekgarala.playdeck.core.http
 
-import app.abhishekgarala.playdeck.BuildConfig
 import app.abhishekgarala.playdeck.core.utils.Constants
-import app.abhishekgarala.playdeck.core.utils.Constants.Companion.TMDB_API_KEY
 import okhttp3.Interceptor
 import okhttp3.Response
 
-class AuthInterceptor : Interceptor {
+class UserAuthInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
-        val token = TMDB_API_KEY
+        val token = Constants.REQRES_API_KEY
         val request = chain.request().newBuilder()
-        request.addHeader("Authorization", "Bearer $token")
+        request.addHeader("x-api-key", token)
         return chain.proceed(request.build())
     }
 }

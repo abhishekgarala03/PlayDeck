@@ -8,41 +8,34 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import app.abhishekgarala.playdeck.core.presentation.BaseScreenWrapper
-import app.abhishekgarala.playdeck.core.utils.Constants.Companion.BUNDLE_ARG_KEY
-import app.abhishekgarala.playdeck.features.movie.domain.entities.GenreEntity
+import app.abhishekgarala.playdeck.core.utils.Constants.Companion.MVD_NAV
+import app.abhishekgarala.playdeck.core.utils.Constants.Companion.MV_NAV
+import app.abhishekgarala.playdeck.core.utils.Constants.Companion.USER_NAV
 import app.abhishekgarala.playdeck.features.movie.domain.entities.MovieResultEntity
-import app.abhishekgarala.playdeck.features.movie.presentation.genreListScreen.GenreListScreen
-import app.abhishekgarala.playdeck.features.movie.presentation.genreListScreen.GenreListViewModel
 import app.abhishekgarala.playdeck.features.movie.presentation.movieDetailScreen.DetailMovieEvent
 import app.abhishekgarala.playdeck.features.movie.presentation.movieDetailScreen.DetailMovieScreen
 import app.abhishekgarala.playdeck.features.movie.presentation.movieDetailScreen.DetailMovieViewModel
-import app.abhishekgarala.playdeck.features.movie.presentation.movieListScreen.MovieListEvent
 import app.abhishekgarala.playdeck.features.movie.presentation.movieListScreen.MovieListScreen
 import app.abhishekgarala.playdeck.features.movie.presentation.movieListScreen.MovieListViewModel
+import app.abhishekgarala.playdeck.features.movie.presentation.userListScreen.UserListScreen
 
 fun NavGraphBuilder.movieNavigation(
     navController: NavHostController,
 ) {
     navigation(
         route = Graph.MOVIE,
-        startDestination = MovieNav.GenreList.route
+        startDestination = MovieNav.UserList.route
     ) {
-        composable(route = MovieNav.GenreList.route) {
-            val viewModel = hiltViewModel<GenreListViewModel>()
-            val state by viewModel.state.collectAsState()
-            BaseScreenWrapper(navController = navController, viewModel = viewModel) {
-                GenreListScreen(
-                    state = state,
-                    onEvent = viewModel::onEvent,
-                )
-            }
+        composable(route = MovieNav.UserList.route) {
+            UserListScreen(
+                onUserClick = { user ->
+                    navController.navigate(MovieNav.MovieList.route)
+                }
+            )
         }
         composable(route = MovieNav.MovieList.route) {
-            val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
-            val data = savedStateHandle?.get<GenreEntity>(BUNDLE_ARG_KEY)
             val viewModel = hiltViewModel<MovieListViewModel>()
             val state by viewModel.state.collectAsState()
-            viewModel.onEvent(MovieListEvent.SetGenre(data))
             BaseScreenWrapper(navController = navController, viewModel = viewModel) {
                 MovieListScreen(
                     state = state,
@@ -64,7 +57,7 @@ fun NavGraphBuilder.movieNavigation(
 }
 
 sealed class MovieNav(val route: String) {
-    data object GenreList : MovieNav("genre_list")
-    data object MovieList : MovieNav("movie_list")
-    data object MovieDetail : MovieNav("movie_detail")
+    data object UserList : MovieNav(USER_NAV)
+    data object MovieList : MovieNav(MV_NAV)
+    data object MovieDetail : MovieNav(MVD_NAV)
 }

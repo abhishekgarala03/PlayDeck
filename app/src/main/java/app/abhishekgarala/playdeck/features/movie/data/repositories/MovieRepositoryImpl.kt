@@ -8,9 +8,7 @@ import app.abhishekgarala.playdeck.core.utils.Resource
 import app.abhishekgarala.playdeck.features.movie.data.dataSource.MoviesPagingSource
 import app.abhishekgarala.playdeck.features.movie.data.dataSource.ReviewersPagingSource
 import app.abhishekgarala.playdeck.features.movie.data.dataSource.remote.MovieApi
-import app.abhishekgarala.playdeck.features.movie.data.model.request.MovieQuery
 import app.abhishekgarala.playdeck.features.movie.domain.entities.DetailMovieEntity
-import app.abhishekgarala.playdeck.features.movie.domain.entities.GenreEntity
 import app.abhishekgarala.playdeck.features.movie.domain.entities.MovieResultEntity
 import app.abhishekgarala.playdeck.features.movie.domain.entities.ReviewResultEntity
 import app.abhishekgarala.playdeck.features.movie.domain.entities.VideoEntity
@@ -20,7 +18,7 @@ import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(private val api: MovieApi) : MovieRepository,
     BaseRepository() {
-    override fun getMovieList(query: MovieQuery): Flow<PagingData<MovieResultEntity>> {
+    override fun getMovieList(): Flow<PagingData<MovieResultEntity>> {
         return Pager(
             config = PagingConfig(
                 pageSize = 20,
@@ -28,8 +26,7 @@ class MovieRepositoryImpl @Inject constructor(private val api: MovieApi) : Movie
             ),
             pagingSourceFactory = {
                 MoviesPagingSource(
-                    api = api,
-                    query = query
+                    api = api
                 )
             }
         ).flow
@@ -61,16 +58,6 @@ class MovieRepositoryImpl @Inject constructor(private val api: MovieApi) : Movie
     override suspend fun getMovieVideo(movieId: Int): Resource<VideoEntity> {
         return when (val res = safeApiCall { api.getVideos(movieId) }) {
             is Resource.Success -> Resource.Success(res.data.toEntity())
-            is Resource.Error -> Resource.Error(res.message)
-            is Resource.Loading -> Resource.Loading
-        }
-    }
-
-    override suspend fun getMovieGenre(): Resource<List<GenreEntity>> {
-        return when (val res = safeApiCall { api.getGenres() }) {
-            is Resource.Success -> Resource.Success(res.data.gendre?.map { it.toEntity() }
-                ?: emptyList())
-
             is Resource.Error -> Resource.Error(res.message)
             is Resource.Loading -> Resource.Loading
         }
