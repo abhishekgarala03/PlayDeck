@@ -38,7 +38,7 @@ To run the app locally, you must define the following API keys in your local.pro
 **▶️ How to Run**
 Clone the repository:
 
-- git clone https://github.com/yourusername/your-repo.git
+- git clone https://github.com/abhishekgarala03/PlayDeck.git
 - cd your-repo
 - Add your keys in local.properties
 - Sync the project in Android Studio
