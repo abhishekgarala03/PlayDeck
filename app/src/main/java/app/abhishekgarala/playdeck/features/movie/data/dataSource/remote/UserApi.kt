@@ -5,7 +5,6 @@ import app.abhishekgarala.playdeck.core.database.request.CreateUserRequest
 import app.abhishekgarala.playdeck.core.database.response.CreateUserResponse
 import app.abhishekgarala.playdeck.core.utils.Constants.Companion.AUTH_USER
 import app.abhishekgarala.playdeck.core.utils.Constants.Companion.PAGE
-import app.abhishekgarala.playdeck.core.utils.Constants.Companion.REQRES_API_KEY
 import app.abhishekgarala.playdeck.core.utils.Constants.Companion.USER_ENDPOINT
 import app.abhishekgarala.playdeck.features.movie.data.model.response.UserResponse
 import retrofit2.Response
@@ -19,13 +18,13 @@ interface UserApi {
 
     @GET(USER_ENDPOINT)
     suspend fun getUsers(
-        @Header(AUTH_USER) apiKey: String = REQRES_API_KEY,
+        @Header(AUTH_USER) apiKey: String = BuildConfig.REQRES_API_KEY,
         @Query(PAGE) page: Int
     ): Response<UserResponse>
 
     @POST(USER_ENDPOINT)
     suspend fun createUser(
-        @Header(AUTH_USER) apiKey: String = REQRES_API_KEY,
+        @Header(AUTH_USER) apiKey: String = BuildConfig.REQRES_API_KEY,
         @Body request: CreateUserRequest
     ): Response<CreateUserResponse>
 

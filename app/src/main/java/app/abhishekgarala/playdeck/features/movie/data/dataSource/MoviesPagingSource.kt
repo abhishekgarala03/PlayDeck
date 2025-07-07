@@ -22,7 +22,7 @@ class MoviesPagingSource(
             LoadResult.Page(
                 data = movies?.results?.map { it.toResultsMovieEntity() } ?: emptyList(),
                 prevKey = if (pageIndex == 1) null else pageIndex - 1,
-                nextKey = pageIndex + 1 //if (pageIndex < movies?.totalPages!!) pageIndex + 1 else 1
+                nextKey = pageIndex + 1
             )
         } catch (exception: IOException) {
             return LoadResult.Error(exception)

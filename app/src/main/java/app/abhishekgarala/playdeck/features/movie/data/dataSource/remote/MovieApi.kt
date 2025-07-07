@@ -10,7 +10,6 @@ import app.abhishekgarala.playdeck.core.utils.Constants.Companion.MOVIE_ID
 import app.abhishekgarala.playdeck.core.utils.Constants.Companion.MOVIE_REVIEWS_ENDPOINT
 import app.abhishekgarala.playdeck.core.utils.Constants.Companion.MOVIE_VIDEOS_ENDPOINT
 import app.abhishekgarala.playdeck.core.utils.Constants.Companion.PAGE
-import app.abhishekgarala.playdeck.core.utils.Constants.Companion.TMDB_API_KEY
 import app.abhishekgarala.playdeck.core.utils.Constants.Companion.TRENDING_MOVIE_ENDPOINT
 import app.abhishekgarala.playdeck.features.movie.data.model.response.DetailMovieResponse
 import app.abhishekgarala.playdeck.features.movie.data.model.response.MovieResponse
@@ -25,21 +24,21 @@ interface MovieApi {
     @GET(TRENDING_MOVIE_ENDPOINT)
     suspend fun getMovies(
         @Query(PAGE) page: Int,
-        @Header(AUTH) authorization: String = BEARER + TMDB_API_KEY
+        @Header(AUTH) authorization: String = BEARER + BuildConfig.TMDB_API_KEY
     ): retrofit2.Response<MovieResponse>
 
     @GET(MOVIE_DETAILS_ENDPOINT)
     suspend fun getDetailMovie(
         @Path(MOVIE_ID) movieId: Int,
         @Query(LANG) language: String = LANGUAGE,
-        @Header(AUTH) authorization: String = BEARER + TMDB_API_KEY
+        @Header(AUTH) authorization: String = BEARER + BuildConfig.TMDB_API_KEY
     ): retrofit2.Response<DetailMovieResponse>
 
     @GET(MOVIE_VIDEOS_ENDPOINT)
     suspend fun getVideos(
         @Path(MOVIE_ID) movieId: Int,
         @Query(LANG) language: String = LANGUAGE,
-        @Header(AUTH) authorization: String = BEARER + TMDB_API_KEY
+        @Header(AUTH) authorization: String = BEARER + BuildConfig.TMDB_API_KEY
     ): retrofit2.Response<VideoMovieResponse>
 
     @GET(MOVIE_REVIEWS_ENDPOINT)
@@ -47,7 +46,7 @@ interface MovieApi {
         @Path(MOVIE_ID) movieId: Int,
         @Query(LANG) language: String = LANGUAGE,
         @Query(PAGE) page: Int = 1,
-        @Header(AUTH) authorization: String = BEARER + TMDB_API_KEY
+        @Header(AUTH) authorization: String = BEARER + BuildConfig.TMDB_API_KEY
     ): retrofit2.Response<ReviewMovieResponse>
 
 }

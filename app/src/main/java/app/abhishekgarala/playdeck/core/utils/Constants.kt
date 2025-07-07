@@ -23,7 +23,5 @@ class Constants {
         const val BASE_URL_USER = "https://reqres.in/"
         const val BASE_IMAGE_URL = "https://image.tmdb.org/t/p/original"
         const val BUNDLE_ARG_KEY = "bundle_arg_key"
-        const val TMDB_API_KEY = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0YTZiNTdjNDczZWMwODIxN2U4NTU2ZGZhOWQwNWY5NCIsInN1YiI6IjY1MWJiYTIwMjIzYThiMDBhYjNkMWEwNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KzwyO2BmjIGyeHJCOu5XOAld_LiRAS92VTGTRQVCrA8"
-        const val REQRES_API_KEY = "reqres-free-v1"
     }
 }

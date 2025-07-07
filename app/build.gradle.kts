@@ -1,3 +1,7 @@
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -15,6 +19,18 @@ android {
     namespace = "app.abhishekgarala.playdeck"
     compileSdk = 34
 
+    val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+
+    applicationVariants.all {
+        outputs.all {
+            val appName = "PlayDeck"
+            val newApkName = "$appName-$timestamp.apk"
+
+            (this as com.android.build.gradle.internal.api.BaseVariantOutputImpl).outputFileName =
+                newApkName
+        }
+    }
+
     defaultConfig {
         applicationId = "app.abhishekgarala.playdeck"
         minSdk = 24
@@ -27,6 +43,18 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        val localProperties = rootProject.file("local.properties")
+        val properties = Properties()
+        properties.load(localProperties.inputStream())
+
+        val tmdbApiKey = properties.getProperty("TMDB_API_KEY")
+        val reqresApiKey = properties.getProperty("REQRES_API_KEY")
+
+        buildConfigField("String", "TMDB_API_KEY", tmdbApiKey)
+        buildConfigField("String", "REQRES_API_KEY", reqresApiKey)
+
+
     }
 
     buildTypes {
