@@ -17,7 +17,7 @@
 |---------------|-----------------------------|
 | Language      | Kotlin                      |
 | UI            | Jetpack Compose, Material 3 |
-| Architecture  | MVVM                        |
+| Architecture  | MVI                        |
 | DI            | Hilt                        |
 | Networking    | Retrofit, OkHttp            |
 | Database      | Room                        |
